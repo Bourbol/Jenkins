@@ -6,15 +6,28 @@ pipeline {
     agent {
         label 'master'
     }
-    triggers{ pollSCM('* * * * *') }
+    triggers { pollSCM('* * * * *') }
     options { timestamps() }
     stages {
-        stage("Docker Build") {
+        stage("Docker login") {
             steps {
-                echo "--------------- Start Docker Build ---------------"
-                dir ('docker/docker_file/') {
-                    sh 'docker build .'
+                echo "======= Docker login ======="
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_push', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                sh 'docker login -u $USERNAME -p $PASSWORD'
+            }
+        }
+        stage("Docker build") {
+            steps {
+                echo "======= Docker build ======="
+                dir(docker/docker_build/) {
+                    sh 'docker build -t Bourbol/ubuntu:test .'
                 }
+            }
+        }
+        stage("Docker push") {
+            steps {
+                echo "======= Docker push ======="
+                sh 'docker push Bourbol/ubuntu:test'
             }
         }
     }
