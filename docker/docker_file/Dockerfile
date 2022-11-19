@@ -1,5 +1,5 @@
-FROM alpine
+FROM ubuntu
 
-RUN yum install -y python
+RUN apt install -y curl
 
 CMD tail -f /dev/null
