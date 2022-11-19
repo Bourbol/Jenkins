@@ -13,7 +13,7 @@ pipeline {
         stage("Docker Build") {
             steps {
                 echo "--------------- Start Docker Build ---------------"
-                dir ('docker/') {
+                dir ('docker/docker_file/') {
                     sh 'docker build .'
                 }
             }
