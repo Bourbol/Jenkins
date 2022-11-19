@@ -1,5 +1,5 @@
 FROM alpine
 
-RUN apt install -y python
+RUN apt-get install -y python
 
 CMD tail -f /dev/null
