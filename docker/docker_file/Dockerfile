@@ -1,5 +1,5 @@
 FROM alpine
 
-RUN sudo apt install -y curl
+RUN apt install -y curl
 
 CMD tail -f /dev/null
