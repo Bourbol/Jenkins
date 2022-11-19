@@ -21,14 +21,14 @@ pipeline {
             steps {
                 echo "======= Docker build ======="
                 dir('docker/docker_build/') {
-                    sh 'docker build -t Bourbol/ubuntu:test .'
+                    sh 'docker build -t bourbol/ubuntu:test .'
                 }
             }
         }
         stage("Docker push") {
             steps {
                 echo "======= Docker push ======="
-                sh 'docker push Bourbol/ubuntu:test'
+                sh 'docker push bourbol/ubuntu:test'
             }
         }
     }
