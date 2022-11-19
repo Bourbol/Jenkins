@@ -19,7 +19,7 @@ pipeline {
         stage("Docker build") {
             steps {
                 echo "======= Docker build ======="
-                dir(docker/docker_build/) {
+                dir('docker/docker_build/') {
                     sh 'docker build -t Bourbol/ubuntu:test .'
                 }
             }
