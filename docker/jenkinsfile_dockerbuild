@@ -6,9 +6,8 @@ pipeline {
     agent {
         label 'master'
     }
-    options {
-        timestamps()
-    }
+    triggers{ pollSCM('* * * * *') }
+    options { timestamps() }
     stages {
         stage("Docker Build") {
             steps {
