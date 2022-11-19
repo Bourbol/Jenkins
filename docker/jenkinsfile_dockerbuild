@@ -14,7 +14,7 @@ pipeline {
             steps {
                 echo "--------------- Start Docker Build ---------------"
                 dir ('docker/docker_file/') {
-                    sh 'sudo docker build .'
+                    sh 'docker build .'
                 }
             }
         }
