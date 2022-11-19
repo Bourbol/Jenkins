@@ -1,5 +1,6 @@
 FROM ubuntu
 
-RUN apt-get install -y curl
+RUN apt update
+RUN apt install -y curl
 
 CMD tail -f /dev/null
