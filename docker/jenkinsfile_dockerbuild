@@ -32,12 +32,12 @@ pipeline {
                 echo "======= Push docker image to registy ======="
                 sh 'docker push bourbol/ubuntu'
             }
-        } 
-        post {
-            success {
-                echo "docker image successfully pushed into registry"
+            post {
+                success {
+                    echo "docker image successfully pushed into registry"
+                }
             }
-        }
+        } 
     }
     post {
         always {
