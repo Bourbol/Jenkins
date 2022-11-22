@@ -4,32 +4,44 @@ properties([disableConcurrentBuilds()])
 
 pipeline {
     agent {
-        label 'master'
+        node {
+            label 'master'
+        }
     }
     triggers { pollSCM('* * * * *') }
     options { timestamps() }
     stages {
         stage("Docker login") {
             steps {
-                echo "======= Docker login ======="
-                withCredentials([usernamePassword(credentialsId: 'dockerhub_push', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                sh 'docker login -u $USERNAME -p $PASSWORD'
+                echo "======= Docker login to DockerHub ======="
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_push', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                    sh 'docker login -u $USER -p $PASSWORD'
                 }
             }
         }
-        stage("Docker build") {
+        stage("Build docker") {
             steps {
-                echo "======= Docker build ======="
-                dir('docker/docker_file/') {
+                echo "======= Build docker image ======="
+                dir ('docker/docker_file/') {
                     sh 'docker build -t bourbol/ubuntu:test .'
                 }
             }
         }
-        stage("Docker push") {
+        stage("Push to registry") {
             steps {
-                echo "======= Docker push ======="
-                sh 'docker push bourbol/ubuntu:test'
+                echo "======= Push docker image to registy ======="
+                sh 'docker push bourbol/ubuntu'
             }
+        } 
+        post {
+            success {
+                echo "docker image successfully pushed into registry"
+            }
+        }
+    }
+    post {
+        always {
+            echo "WE NEED MORE IMAGES"
         }
     }
 }
